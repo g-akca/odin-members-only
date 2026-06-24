@@ -4,6 +4,8 @@
   "description": "Members only clubhouse app built with Express, Passport.js, EJS, and PostgreSQL. A project from The Odin Project's Full Stack JavaScript course.",
   "main": "index.js",
   "scripts": {
+    "build:css": "tailwindcss -i ./src/styles.css -o ./public/tailwind.css",
+    "watch:css": "tailwindcss -i ./src/styles.css -o ./public/tailwind.css --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,11 +21,13 @@
   },
   "homepage": "https://github.com/g-akca/odin-members-only#readme",
   "dependencies": {
+    "@tailwindcss/cli": "^4.3.1",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
-    "pg": "^8.22.0"
+    "pg": "^8.22.0",
+    "tailwindcss": "^4.3.1"
   }
 }
