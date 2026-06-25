@@ -1,7 +1,7 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import express from "express";
-import router from "./routes/authRouter.js";
+import authRouter from "./routes/authRouter.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,7 +18,7 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.use(router);
+app.use(authRouter);
 
 // Centralized error handler
 app.use((err, req, res, next) => {
