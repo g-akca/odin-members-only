@@ -1,6 +1,8 @@
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import express from "express";
+import session from "express-session";
+import passport from "passport";
 import authRouter from "./routes/authRouter.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -9,11 +11,16 @@ const __dirname = path.dirname(__filename);
 const app = express();
 const PORT = 3000;
 
+// Settings
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
+app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
+app.use(passport.session());
+
+// Routes
 app.get("/", (req, res) => {
   res.render("index");
 });
