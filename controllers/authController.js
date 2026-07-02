@@ -8,11 +8,20 @@ function signupFormGet(req, res) {
 
 const validateSignup = [
   body("firstName").trim()
-    .notEmpty().withMessage("First name can not be empty.")
+    .notEmpty().withMessage("First name is required.")
     .isAlpha().withMessage("First name must only contain alphabet letters."),
   body("lastName").trim()
-    .notEmpty().withMessage("Last name can not be empty.")
+    .notEmpty().withMessage("Last name is required.")
     .isAlpha().withMessage("Last name must only contain alphabet letters."),
+  body("email").trim()
+    .normalizeEmail().notEmpty().withMessage("Email is required.")
+    .isEmail().withMessage("Please provide a valid email address."),
+  body("password").trim()
+    .notEmpty().withMessage("Password is required.")
+    .isLength({ min: 8 }).withMessage("Password must be at least 8 characters long."),
+  body("confirmPassword").trim()
+    .notEmpty().withMessage("Please confirm your password.")
+    .custom((value, { req }) => value === req.body.password).withMessage("Passwords do not match."),
 ];
 
 async function signupFormPost(req, res, next) {
