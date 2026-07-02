@@ -15,19 +15,19 @@
       <div class="w-full grid grid-cols-2 gap-8">
         <label for="firstName" class="justify-self-end self-center">First Name:</label>
         
-        <input type="text" id="firstName" name="firstName" class="w-full px-2 py-1 border rounded" required>
+        <input type="text" id="firstName" name="firstName" class="w-full px-2 py-1 border rounded" value="<%= locals.values?.firstName || "" %>" required>
       </div>
 
       <div class="w-full grid grid-cols-2 gap-8">
         <label for="lastName" class="justify-self-end self-center">Last Name:</label>
 
-        <input type="text" id="lastName" name="lastName" class="w-full px-2 py-1 border rounded" required>
+        <input type="text" id="lastName" name="lastName" class="w-full px-2 py-1 border rounded" value="<%= locals.values?.lastName || "" %>" required>
       </div>
 
       <div class="w-full grid grid-cols-2 gap-8">
         <label for="email" class="justify-self-end self-center">Email Address:</label>
 
-        <input type="email" id="email" name="email" class="w-full px-2 py-1 border rounded" required>
+        <input type="email" id="email" name="email" class="w-full px-2 py-1 border rounded" value="<%= locals.values?.email || "" %>" required>
       </div>
 
       <div class="w-full grid grid-cols-2 gap-8">

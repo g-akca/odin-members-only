@@ -30,7 +30,8 @@ async function signupFormPost(req, res, next) {
 
     if (!errors.isEmpty()) {
       return res.status(400).render("signup", {
-        errors: errors.array()
+        errors: errors.array(),
+        values: req.body 
       });
     }
 
