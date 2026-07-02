@@ -1,8 +1,10 @@
 import { Router } from "express";
-import { signupFormGet } from "../controllers/authController.js";
+import { signupFormGet, signupFormPost } from "../controllers/authController.js";
 
 const authRouter = Router();
 
 authRouter.get("/signup", signupFormGet);
+
+authRouter.post("/signup", signupFormPost);
 
 export default authRouter;
