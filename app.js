@@ -24,6 +24,11 @@ app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use((req, res, next) => {
+  res.locals.user = req.user;
+  next();
+});
+
 passport.use(
   new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
     try {

@@ -2,10 +2,16 @@
   <div class="grow max-w-300 flex justify-between items-center">
     <h1 class="font-bold text-[20px]">Members Only - An Anonymous Message App</h1>
 
-    <nav class="flex items-center gap-4">
-      <a href="/login" class="text-blue-800 underline">Log In</a>
+    <% if (user) { %>
+      <div class="text-blue-800 font-semibold">
+        <%= `${user.first_name} ${user.last_name}` %>
+      </div>
+    <% } else { %>
+      <nav class="flex items-center gap-4">
+        <a href="/login" class="text-blue-800 underline">Log In</a>
 
-      <a href="/signup" class="text-blue-800 underline">Sign Up</a>
-    </nav>
+        <a href="/signup" class="text-blue-800 underline">Sign Up</a>
+      </nav>
+    <% } %>
   </div>
 </header>
