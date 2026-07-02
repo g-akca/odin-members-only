@@ -3,7 +3,9 @@ import { fileURLToPath } from "node:url";
 import express from "express";
 import session from "express-session";
 import passport from "passport";
+import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcryptjs";
+import pool from "./db/pool.js";
 import authRouter from "./routes/authRouter.js";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -19,10 +21,11 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 
 app.use(session({ secret: "cats", resave: false, saveUninitialized: false }));
+app.use(passport.initialize());
 app.use(passport.session());
 
 passport.use(
-  new LocalStrategy(async (email, password, done) => {
+  new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
     try {
       const { rows } = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
       const user = rows[0];
@@ -30,7 +33,7 @@ passport.use(
       if (!user) {
         return done(null, false, { message: "Incorrect email" });
       }
-      
+
       const match = await bcrypt.compare(password, user.password);
       if (!match) {
         return done(null, false, { message: "Incorrect password" })

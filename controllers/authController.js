@@ -45,4 +45,8 @@ async function signupFormPost(req, res, next) {
   }
 }
 
-export { signupFormGet, signupFormPost, validateSignup };
+function loginFormGet(req, res) {
+  res.render("login");
+}
+
+export { signupFormGet, signupFormPost, validateSignup, loginFormGet };
