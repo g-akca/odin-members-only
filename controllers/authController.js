@@ -1,5 +1,6 @@
 import { body, validationResult, matchedData } from "express-validator";
 import bcrypt from "bcryptjs";
+import passport from "passport";
 import { insertUser } from "../db/queries.js";
 
 function signupFormGet(req, res) {
@@ -49,4 +50,26 @@ function loginFormGet(req, res) {
   res.render("login");
 }
 
-export { signupFormGet, signupFormPost, validateSignup, loginFormGet };
+function loginFormPost(req, res, next) {
+  passport.authenticate("local", (err, user, info) => {
+    if (err) {
+      return next(err);
+    }
+
+    if (!user) {
+      return res.status(401).render("login", {
+        errors: [{ msg: info.message }],
+        values: { email: req.body.email }
+      });
+    }
+    
+    req.logIn(user, (err) => {
+      if (err) {
+        return next(err);
+      }
+      res.redirect("/");
+    });
+  })(req, res, next);
+}
+
+export { signupFormGet, signupFormPost, validateSignup, loginFormGet, loginFormPost };
