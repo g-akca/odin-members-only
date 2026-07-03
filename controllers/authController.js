@@ -72,4 +72,8 @@ function loginFormPost(req, res, next) {
   })(req, res, next);
 }
 
-export { signupFormGet, signupFormPost, validateSignup, loginFormGet, loginFormPost };
+function membershipFormGet(req, res) {
+  res.render("membership");
+}
+
+export { signupFormGet, signupFormPost, validateSignup, loginFormGet, loginFormPost, membershipFormGet };

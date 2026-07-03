@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/tailwind.css" rel="stylesheet">
+    <title>Members Only - Become a Member</title>
+  </head>
+  <body class="flex flex-col">
+    <%- include("partials/header.ejs") %>
+
+    <form method="POST" action="/membership" class="p-4 flex flex-col items-center gap-6 max-w-lg self-center">
+      <%- include("partials/errors.ejs") %>
+
+      <div class="w-full flex flex-col items-center gap-2">
+        <label for="secretCode" class="justify-self-end self-center">Secret Code:</label>
+
+        <input type="password" id="secretCode" name="secretCode" class="w-full px-2 py-1 border rounded text-center" required>
+      </div>
+
+      <button type="submit" class="px-5 py-1 rounded-lg bg-green-700 text-white cursor-pointer">Become a Member</button>
+    </form>
+  </body>
+</html>
