@@ -81,13 +81,13 @@ function membershipFormGet(req, res) {
 
 const validateMembership = [
   body("secretCode").trim()
-  .notEmpty().withMessage("Please enter a code.")
-  .custom((value, { req }) => value === "neko").withMessage("Oops, incorrect code! Please try again."),
+    .notEmpty().withMessage("Please enter a code.")
+    .custom((value, { req }) => value === "neko").withMessage("Oops, incorrect code! Please try again."),
 ];
 
-function membershipFormPost(req, res, next) {
+async function membershipFormPost(req, res, next) {
   try {
-    const errors = validationResult(validateMembership);
+    const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
       return res.status(400).render("membership", {
