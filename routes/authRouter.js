@@ -3,13 +3,29 @@ import { signupFormGet, signupFormPost, validateSignup, loginFormGet, loginFormP
 
 const authRouter = Router();
 
-authRouter.get("/signup", signupFormGet);
-authRouter.post("/signup", validateSignup, signupFormPost);
+// Middleware to ensure only guests (non-authenticated users) can access signup/login
+function guestOnly(req, res, next) {
+  if (req.isAuthenticated()) {
+    return res.redirect("/");
+  }
+  next();
+}
 
-authRouter.get("/login", loginFormGet);
-authRouter.post("/login", loginFormPost);
+// Middleware to ensure only non-member authenticated users can access membership form
+function nonMemberOnly(req, res, next) {
+  if (!req.isAuthenticated() || req.user.is_member) {
+    return res.redirect("/");
+  }
+  next();
+}
 
-authRouter.get("/membership", membershipFormGet);
-authRouter.post("/membership", validateMembership, membershipFormPost);
+authRouter.get("/signup", guestOnly, signupFormGet);
+authRouter.post("/signup", guestOnly, validateSignup, signupFormPost);
+
+authRouter.get("/login", guestOnly, loginFormGet);
+authRouter.post("/login", guestOnly, loginFormPost);
+
+authRouter.get("/membership", nonMemberOnly, membershipFormGet);
+authRouter.post("/membership", nonMemberOnly, validateMembership, membershipFormPost);
 
 export default authRouter;
