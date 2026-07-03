@@ -10,19 +10,19 @@ function signupFormGet(req, res) {
 
 const validateSignup = [
   body("firstName").trim()
-    .notEmpty().withMessage("First name is required.")
+    .notEmpty().withMessage("First name is required.").bail()
     .isAlpha().withMessage("First name must only contain alphabet letters."),
   body("lastName").trim()
-    .notEmpty().withMessage("Last name is required.")
+    .notEmpty().withMessage("Last name is required.").bail()
     .isAlpha().withMessage("Last name must only contain alphabet letters."),
   body("email").trim()
-    .normalizeEmail().notEmpty().withMessage("Email is required.")
+    .normalizeEmail().notEmpty().withMessage("Email is required.").bail()
     .isEmail().withMessage("Please provide a valid email address."),
   body("password").trim()
-    .notEmpty().withMessage("Password is required.")
+    .notEmpty().withMessage("Password is required.").bail()
     .isLength({ min: 8 }).withMessage("Password must be at least 8 characters long."),
   body("confirmPassword").trim()
-    .notEmpty().withMessage("Please confirm your password.")
+    .notEmpty().withMessage("Please confirm your password.").bail()
     .custom((value, { req }) => value === req.body.password).withMessage("Passwords do not match."),
 ];
 
@@ -81,7 +81,7 @@ function membershipFormGet(req, res) {
 
 const validateMembership = [
   body("secretCode").trim()
-    .notEmpty().withMessage("Please enter a code.")
+    .notEmpty().withMessage("Please enter a code.").bail()
     .custom((value, { req }) => value === "neko").withMessage("Oops, incorrect code! Please try again."),
 ];
 
