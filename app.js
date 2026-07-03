@@ -66,7 +66,6 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-
 // Routes
 app.get("/", (req, res) => {
   res.render("index");

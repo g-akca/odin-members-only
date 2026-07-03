@@ -1,8 +1,9 @@
 import { body, validationResult, matchedData } from "express-validator";
 import bcrypt from "bcryptjs";
 import passport from "passport";
-import { insertUser } from "../db/queries.js";
+import { insertUser, makeUserMember } from "../db/queries.js";
 
+// Signup
 function signupFormGet(req, res) {
   res.render("signup");
 }
@@ -46,6 +47,7 @@ async function signupFormPost(req, res, next) {
   }
 }
 
+// Login
 function loginFormGet(req, res) {
   res.render("login");
 }
@@ -72,8 +74,32 @@ function loginFormPost(req, res, next) {
   })(req, res, next);
 }
 
+// Membership
 function membershipFormGet(req, res) {
   res.render("membership");
 }
 
-export { signupFormGet, signupFormPost, validateSignup, loginFormGet, loginFormPost, membershipFormGet };
+const validateMembership = [
+  body("secretCode").trim()
+  .notEmpty().withMessage("Please enter a code.")
+  .custom((value, { req }) => value === "neko").withMessage("Oops, incorrect code! Please try again."),
+];
+
+function membershipFormPost(req, res, next) {
+  try {
+    const errors = validationResult(validateMembership);
+
+    if (!errors.isEmpty()) {
+      return res.status(400).render("membership", {
+        errors: errors.array(),
+      });
+    }
+
+    await makeUserMember(req.user.id);
+    res.redirect("/");
+  } catch (err) {
+    next(err);
+  }
+}
+
+export { signupFormGet, signupFormPost, validateSignup, loginFormGet, loginFormPost, membershipFormGet, membershipFormPost, validateMembership };
