@@ -3,8 +3,18 @@
     <h1 class="font-bold text-[20px]">Members Only - An Anonymous Message App</h1>
 
     <% if (user) { %>
-      <div class="text-blue-800 font-semibold">
-        <%= `${user.first_name} ${user.last_name}` %>
+      <div class="flex items-center gap-4">
+        <nav class="flex items-center gap-4">
+          <a href="/logout" class="text-blue-800 underline">Log Out</a>
+
+          <% if (!user.is_member) { %>
+            <a href="/membership" class="text-green-700 underline">Become a Member</a>
+          <% } %>
+        </nav>
+
+        <p class="font-semibold text-[19px] <%= user.is_member ? 'text-green-700' : 'text-black' %>">
+          <%= `${user.first_name} ${user.last_name}` %>
+        </p>
       </div>
     <% } else { %>
       <nav class="flex items-center gap-4">
