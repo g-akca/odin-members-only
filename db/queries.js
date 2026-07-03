@@ -11,7 +11,7 @@ async function insertUser(firstName, lastName, email, hashedPassword) {
 
 async function makeUserMember(id) {
   try {
-    await pool.query("UPDATE users WHERE id = $1 SET is_member = TRUE", [id]);
+    await pool.query("UPDATE users SET is_member = TRUE WHERE id = $1", [id]);
   } catch (error) {
     console.error("Error making user a member:", error);
     throw(error);
