@@ -74,6 +74,17 @@ function loginFormPost(req, res, next) {
   })(req, res, next);
 }
 
+// Logout
+function logoutGet(req, res, next) {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    
+    res.redirect("/");
+  });
+}
+
 // Membership
 function membershipFormGet(req, res) {
   res.render("membership");
@@ -102,4 +113,4 @@ async function membershipFormPost(req, res, next) {
   }
 }
 
-export { signupFormGet, signupFormPost, validateSignup, loginFormGet, loginFormPost, membershipFormGet, membershipFormPost, validateMembership };
+export { signupFormGet, signupFormPost, validateSignup, loginFormGet, loginFormPost, logoutGet, membershipFormGet, membershipFormPost, validateMembership };
