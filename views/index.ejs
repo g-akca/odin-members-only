@@ -9,13 +9,25 @@
   <body>
     <%- include("partials/header.ejs") %>
 
-    <main class="p-6 flex flex-col items-center gap-6">
+    <main class="p-6 flex flex-col items-center gap-8">
       <% if (user) { %>
         <a href="/messages/new" class="px-7 py-2 bg-blue-500 text-white rounded-xl">Post New Message</a>
       <% } %>
 
-      <div>
-        <!-- Messages will be shown here -->
+      <div class="w-full max-w-xl flex flex-col gap-4">
+        <% messages.map(message => { %>
+          <div class="border p-4 rounded-xl">
+            <% if (user?.is_member) { %>
+              <div class="flex gap-6 items-center">
+                <p class="font-bold">By: <%= message.user_id %></p>
+                <p><%= new Date(message.timestamp).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) %></p>
+              </div>
+            <% } %>
+
+            <h2 class="font-bold text-[20px]"><%= message.title %></h2>
+            <p><%= message.message %></p>
+          </div>
+        <% }) %>
       </div>
     </main>
   </body>

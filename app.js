@@ -70,9 +70,9 @@ passport.deserializeUser(async (id, done) => {
 // Routes
 app.get("/", async (req, res, next) => {
   try {
-    const messages = await getAllMessages();
+    const { rows } = await getAllMessages();
 
-    res.render("index", { messages });
+    res.render("index", { messages: rows });
   } catch (err) {
     next(err);
   }
