@@ -36,4 +36,13 @@ async function getUserById(id) {
   }
 }
 
-export { insertUser, makeUserMember, getUserByEmail, getUserById };
+async function insertMessage(userId, title, message, timestamp) {
+  try {
+    await pool.query("INSERT INTO messages (user_id, title, message, timestamp) VALUES ($1, $2, $3, $4)", [userId, title, message, timestamp]);
+  } catch (error) {
+    console.error("Error inserting new message:", error);
+    throw(error);
+  }
+}
+
+export { insertUser, makeUserMember, getUserByEmail, getUserById, insertMessage };
