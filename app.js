@@ -7,6 +7,7 @@ import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcryptjs";
 import pool from "./db/pool.js";
 import authRouter from "./routes/authRouter.js";
+import messagesRouter from "./routes/messagesRouter.js";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -72,6 +73,8 @@ app.get("/", (req, res) => {
 });
 
 app.use(authRouter);
+
+app.use("/messages", messagesRouter);
 
 // Centralized error handler
 app.use((err, req, res, next) => {

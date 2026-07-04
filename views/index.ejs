@@ -9,8 +9,14 @@
   <body>
     <%- include("partials/header.ejs") %>
 
-    <main>
-      <!-- Messages will be shown here -->
+    <main class="p-6 flex flex-col items-center gap-6">
+      <% if (user) { %>
+        <a href="/messages/new" class="px-7 py-2 bg-blue-500 text-white rounded-xl">Post New Message</a>
+      <% } %>
+
+      <div>
+        <!-- Messages will be shown here -->
+      </div>
     </main>
   </body>
 </html>
