@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { messageFormGet } from "../controllers/messagesController.js";
+import { messageFormGet, messageFormPost, validateMessage } from "../controllers/messagesController.js";
 
 const messagesRouter = Router();
 
@@ -13,5 +13,7 @@ function userOnly(req, res, next) {
 }
 
 messagesRouter.get("/new", userOnly, messageFormGet);
+
+messagesRouter.post("/", userOnly, validateMessage, messageFormPost);
 
 export default messagesRouter;
