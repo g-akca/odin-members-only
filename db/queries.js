@@ -47,7 +47,7 @@ async function insertMessage(userId, title, message, timestamp) {
 
 async function getAllMessages() {
   try {
-    return await pool.query("SELECT * FROM messages");
+    return await pool.query("SELECT messages.*, users.first_name, users.last_name FROM messages JOIN users ON messages.user_id = users.id");
   } catch (error) {
     console.error("Error getting messages:", error);
     throw(error);
