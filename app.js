@@ -5,7 +5,7 @@ import session from "express-session";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcryptjs";
-import { getUserByEmail, getUserById } from "./db/queries.js";
+import { getAllMessages, getUserByEmail, getUserById } from "./db/queries.js";
 import authRouter from "./routes/authRouter.js";
 import messagesRouter from "./routes/messagesRouter.js";
 
@@ -46,7 +46,7 @@ passport.use(
       }
 
       return done(null, user);
-    } catch(err) {
+    } catch (err) {
       return done(err);
     }
   })
@@ -62,14 +62,20 @@ passport.deserializeUser(async (id, done) => {
     const user = rows[0];
 
     done(null, user);
-  } catch(err) {
+  } catch (err) {
     done(err);
   }
 });
 
 // Routes
-app.get("/", (req, res) => {
-  res.render("index");
+app.get("/", async (req, res, next) => {
+  try {
+    const messages = await getAllMessages();
+
+    res.render("index", { messages });
+  } catch (err) {
+    next(err);
+  }
 });
 
 app.use(authRouter);

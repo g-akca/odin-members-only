@@ -45,4 +45,13 @@ async function insertMessage(userId, title, message, timestamp) {
   }
 }
 
-export { insertUser, makeUserMember, getUserByEmail, getUserById, insertMessage };
+async function getAllMessages() {
+  try {
+    return await pool.query("SELECT * FROM messages");
+  } catch (error) {
+    console.error("Error getting messages:", error);
+    throw(error);
+  }
+}
+
+export { insertUser, makeUserMember, getUserByEmail, getUserById, insertMessage, getAllMessages };
