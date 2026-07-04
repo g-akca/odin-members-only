@@ -5,7 +5,7 @@ import session from "express-session";
 import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcryptjs";
-import pool from "./db/pool.js";
+import { getUserByEmail, getUserById } from "./db/queries.js";
 import authRouter from "./routes/authRouter.js";
 import messagesRouter from "./routes/messagesRouter.js";
 
@@ -33,7 +33,7 @@ app.use((req, res, next) => {
 passport.use(
   new LocalStrategy({ usernameField: "email" }, async (email, password, done) => {
     try {
-      const { rows } = await pool.query("SELECT * FROM users WHERE email = $1", [email]);
+      const { rows } = await getUserByEmail(email);
       const user = rows[0];
 
       if (!user) {
@@ -58,7 +58,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [id]);
+    const { rows } = await getUserById(id);
     const user = rows[0];
 
     done(null, user);
