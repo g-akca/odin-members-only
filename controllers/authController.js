@@ -113,4 +113,15 @@ async function membershipFormPost(req, res, next) {
   }
 }
 
-export { signupFormGet, signupFormPost, validateSignup, loginFormGet, loginFormPost, logoutGet, membershipFormGet, membershipFormPost, validateMembership };
+// Admin
+function adminFormGet(req, res) {
+  res.render("admin");
+}
+
+export { 
+  signupFormGet, signupFormPost, validateSignup, 
+  loginFormGet, loginFormPost, 
+  logoutGet, 
+  membershipFormGet, membershipFormPost, validateMembership, 
+  adminFormGet 
+};

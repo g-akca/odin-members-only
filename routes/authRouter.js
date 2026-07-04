@@ -1,5 +1,11 @@
 import { Router } from "express";
-import { signupFormGet, signupFormPost, validateSignup, loginFormGet, loginFormPost, logoutGet, membershipFormGet, membershipFormPost, validateMembership } from "../controllers/authController.js";
+import { 
+  signupFormGet, signupFormPost, validateSignup, 
+  loginFormGet, loginFormPost, 
+  logoutGet, 
+  membershipFormGet, membershipFormPost, validateMembership, 
+  adminFormGet 
+} from "../controllers/authController.js";
 
 const authRouter = Router();
 
@@ -30,6 +36,15 @@ function nonMemberOnly(req, res, next) {
   next();
 }
 
+// Middleware to ensure only non-admin authenticated users can access admin form
+function nonAdminOnly(req, res, next) {
+  if (!req.isAuthenticated() || req.user.is_admin) {
+    return res.redirect("/");
+  }
+
+  next();
+}
+
 authRouter.get("/signup", guestOnly, signupFormGet);
 authRouter.post("/signup", guestOnly, validateSignup, signupFormPost);
 
@@ -40,5 +55,7 @@ authRouter.get("/logout", userOnly, logoutGet);
 
 authRouter.get("/membership", nonMemberOnly, membershipFormGet);
 authRouter.post("/membership", nonMemberOnly, validateMembership, membershipFormPost);
+
+authRouter.get("/admin", nonAdminOnly, adminFormGet);
 
 export default authRouter;
