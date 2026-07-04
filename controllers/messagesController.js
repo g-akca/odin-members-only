@@ -1,5 +1,5 @@
 function messageFormGet(req, res) {
-  res.render("/newMessage");
+  res.render("newMessage");
 }
 
 export { messageFormGet };
