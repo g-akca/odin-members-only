@@ -41,7 +41,12 @@ async function signupFormPost(req, res, next) {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     await insertUser(firstName, lastName, email, hashedPassword);
-    res.redirect("/");
+
+    return passport.authenticate("local", {
+      successRedirect: "/",
+      failureRedirect: "/login",
+      failureMessage: true,
+    })(req, res, next);
   } catch (err) {
     next(err);
   }
