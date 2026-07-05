@@ -20,6 +20,7 @@
     --spacing: 0.25rem;
     --container-lg: 32rem;
     --container-xl: 36rem;
+    --font-weight-light: 300;
     --font-weight-semibold: 600;
     --font-weight-bold: 700;
     --radius-lg: 0.5rem;
@@ -307,6 +308,9 @@
   .text-center {
     text-align: center;
   }
+  .text-\[12px\] {
+    font-size: 12px;
+  }
   .text-\[19px\] {
     font-size: 19px;
   }
@@ -316,6 +320,10 @@
   .font-bold {
     --tw-font-weight: var(--font-weight-bold);
     font-weight: var(--font-weight-bold);
+  }
+  .font-light {
+    --tw-font-weight: var(--font-weight-light);
+    font-weight: var(--font-weight-light);
   }
   .font-semibold {
     --tw-font-weight: var(--font-weight-semibold);
