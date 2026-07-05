@@ -4,7 +4,7 @@ import {
   loginFormGet, loginFormPost, 
   logoutGet, 
   membershipFormGet, membershipFormPost, validateMembership, 
-  adminFormGet 
+  adminFormGet, adminFormPost, validateAdmin 
 } from "../controllers/authController.js";
 
 const authRouter = Router();
@@ -57,5 +57,6 @@ authRouter.get("/membership", nonMemberOnly, membershipFormGet);
 authRouter.post("/membership", nonMemberOnly, validateMembership, membershipFormPost);
 
 authRouter.get("/admin", nonAdminOnly, adminFormGet);
+authRouter.post("/admin", nonAdminOnly, validateAdmin, adminFormPost);
 
 export default authRouter;

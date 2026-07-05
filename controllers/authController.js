@@ -1,7 +1,7 @@
 import { body, validationResult, matchedData } from "express-validator";
 import bcrypt from "bcryptjs";
 import passport from "passport";
-import { insertUser, makeUserMember } from "../db/queries.js";
+import { insertUser, makeUserMember, makeUserAdmin } from "../db/queries.js";
 
 // Signup
 function signupFormGet(req, res) {
@@ -118,10 +118,33 @@ function adminFormGet(req, res) {
   res.render("admin");
 }
 
+const validateAdmin = [
+  body("adminCode").trim()
+    .notEmpty().withMessage("Please enter a code.").bail()
+    .custom((value, { req }) => value === "supersecretcode").withMessage("Oops, incorrect code! Please try again."),
+];
+
+async function adminFormPost(req, res, next) {
+  try {
+    const errors = validationResult(req);
+    
+    if (!errors.isEmpty()) {
+      res.status(400).render("admin", {
+        errors: errors.array(),
+      });
+    }
+
+    await makeUserAdmin(req.user.id);
+    res.redirect("/");
+  } catch (err) {
+    next(err);
+  }
+}
+
 export { 
   signupFormGet, signupFormPost, validateSignup, 
   loginFormGet, loginFormPost, 
   logoutGet, 
   membershipFormGet, membershipFormPost, validateMembership, 
-  adminFormGet 
+  adminFormGet, adminFormPost, validateAdmin
 };

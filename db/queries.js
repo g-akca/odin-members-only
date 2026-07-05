@@ -18,6 +18,15 @@ async function makeUserMember(id) {
   }
 }
 
+async function makeUserAdmin(id) {
+  try {
+    await pool.query("UPDATE users SET is_admin = TRUE WHERE id = $1", [id]);
+  } catch (error) {
+    console.error("Error making user an admin:", error);
+    throw(error);
+  }
+}
+
 async function getUserByEmail(email) {
   try {
     return await pool.query("SELECT * FROM users WHERE email = $1", [email]);
@@ -54,4 +63,4 @@ async function getAllMessages() {
   }
 }
 
-export { insertUser, makeUserMember, getUserByEmail, getUserById, insertMessage, getAllMessages };
+export { insertUser, makeUserMember, makeUserAdmin, getUserByEmail, getUserById, insertMessage, getAllMessages };
