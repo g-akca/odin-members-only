@@ -12,7 +12,7 @@
           <% } %>
         </nav>
 
-        <p class="font-semibold text-[19px] <%= user.is_member ? 'text-green-700' : 'text-black' %>">
+        <p class="font-semibold text-[19px] <%= user.is_admin ? 'text-red-700' : user.is_member ? 'text-green-700' : 'text-black' %>">
           <%= `${user.first_name} ${user.last_name}` %>
         </p>
       </div>

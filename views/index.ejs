@@ -17,7 +17,7 @@
       <div class="w-full max-w-xl flex flex-col gap-4">
         <% messages.map(message => { %>
           <div class="border p-4 rounded-xl">
-            <% if (user?.is_member) { %>
+            <% if (user?.is_member || user?.is_admin) { %>
               <div class="flex gap-6 items-center justify-between">
                 <p class="font-semibold">By: <%= `${message.first_name} ${message.last_name}` %></p>
                 <p><%= new Date(message.timestamp).toLocaleString('en-US', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit' }) %></p>
