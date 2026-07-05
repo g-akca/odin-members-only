@@ -10,8 +10,6 @@
     <%- include("partials/header.ejs") %>
 
     <main class="p-6 flex flex-col items-center gap-8">
-      <%- include("partials/successes.ejs") %>
-
       <% if (user) { %>
         <a href="/messages/new" class="px-7 py-2 bg-blue-500 text-white rounded-xl">Post New Message</a>
       <% } %>
