@@ -91,7 +91,7 @@ function membershipFormGet(req, res) {
 }
 
 const validateMembership = [
-  body("secretCode").trim()
+  body("memberCode").trim()
     .notEmpty().withMessage("Please enter a code.").bail()
     .custom((value, { req }) => value === "neko").withMessage("Oops, incorrect code! Please try again."),
 ];
