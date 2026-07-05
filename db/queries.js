@@ -63,4 +63,13 @@ async function getAllMessages() {
   }
 }
 
-export { insertUser, makeUserMember, makeUserAdmin, getUserByEmail, getUserById, insertMessage, getAllMessages };
+async function deleteMessage(id) {
+  try {
+    await pool.query("DELETE FROM messages WHERE id = $1", [id]);
+  } catch (error) {
+    console.error("Error deleting message:", error);
+    throw(error);
+  }
+}
+
+export { insertUser, makeUserMember, makeUserAdmin, getUserByEmail, getUserById, insertMessage, getAllMessages, deleteMessage };

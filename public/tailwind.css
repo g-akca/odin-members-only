@@ -272,6 +272,9 @@
   .bg-red-300 {
     background-color: var(--color-red-300);
   }
+  .bg-red-700 {
+    background-color: var(--color-red-700);
+  }
   .bg-red-800 {
     background-color: var(--color-red-800);
   }
@@ -295,6 +298,9 @@
   }
   .px-7 {
     padding-inline: calc(var(--spacing) * 7);
+  }
+  .py-0\.5 {
+    padding-block: calc(var(--spacing) * 0.5);
   }
   .py-1 {
     padding-block: var(--spacing);

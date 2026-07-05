@@ -1,5 +1,5 @@
 import { body, validationResult, matchedData } from "express-validator";
-import { insertMessage } from "../db/queries.js";
+import { insertMessage, deleteMessage } from "../db/queries.js";
 
 function messageFormGet(req, res) {
   res.render("newMessage");
@@ -26,11 +26,20 @@ async function messageFormPost(req, res, next) {
     const { title, message } = matchedData(req);
     const timestamp = new Date();
 
-    insertMessage(req.user.id, title, message, timestamp);
+    await insertMessage(req.user.id, title, message, timestamp);
     res.redirect("/");
   } catch (err) {
     next(err);
   }
 }
 
-export { messageFormGet, messageFormPost, validateMessage };
+async function messageDeletePost(req, res, next) {
+  try {
+    await deleteMessage(req.params.id);
+    res.redirect("/");
+  } catch (err) {
+    next(err);
+  }
+}
+
+export { messageFormGet, messageFormPost, validateMessage, messageDeletePost };
